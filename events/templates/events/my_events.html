@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Мои события</title>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .event-card { border: 1px solid #4CAF50; padding: 15px; margin: 10px 0; border-radius: 8px; }
+        .navbar { background: #333; padding: 10px; margin-bottom: 20px; }
+        .navbar a { color: white; margin-right: 15px; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/">← На главную</a>
+        <span style="color: #ccc;">{{ user.username }}</span>
+    </div>
+    
+    <h1>Мои события</h1>
+    
+    {% if participations %}
+        {% for participation in participations %}
+        <div class="event-card">
+            <h3>{{ participation.event.title }}</h3>
+            <p><strong>Дата:</strong> {{ participation.event.date|date:"d M Y, H:i" }}</p>
+            <p><strong>Место:</strong> {{ participation.event.location }}</p>
+            <p><strong>Записан:</strong> {{ participation.registered_at|date:"d M Y, H:i" }}</p>
+            <a href="{% url 'event_detail' participation.event.id %}">Перейти к событию →</a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>Вы ещё не записались ни на одно событие.</p>
+        <a href="/" class="btn">Посмотреть события</a>
+    {% endif %}
+</body>
+</html>

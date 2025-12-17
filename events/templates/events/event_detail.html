@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ event.title }}</title>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .event-header { background: #f5f5f5; padding: 20px; border-radius: 8px; }
+        .btn { background: #2196F3; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; display: inline-block; }
+        .btn-success { background: #4CAF50; }
+        .btn-disabled { background: #ccc; cursor: not-allowed; }
+        .navbar { background: #333; padding: 10px; margin-bottom: 20px; }
+        .navbar a { color: white; margin-right: 15px; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/">← Назад</a>
+        {% if user.is_authenticated %}
+            <span style="color: #ccc;">{{ user.username }}</span>
+        {% endif %}
+    </div>
+    
+    <div class="event-header">
+        <h1>{{ event.title }}</h1>
+        <p><strong>Дата:</strong> {{ event.date|date:"d M Y, H:i" }}</p>
+        <p><strong>Место:</strong> {{ event.location }}</p>
+        <p><strong>Участники:</strong> {{ event.registered_count }}
+            {% if event.max_participants > 0 %}
+                / {{ event.max_participants }}
+            {% endif %}
+        </p>
+        <p><strong>Организатор:</strong> {{ event.created_by.username }}</p>
+    </div>
+    
+    <div style="margin: 20px 0;">
+        <h3>Описание:</h3>
+        <p>{{ event.description|linebreaks }}</p>
+    </div>
+    
+    <div style="margin: 30px 0;">
+        {% if user.is_authenticated %}
+            {% if is_registered %}
+                <button class="btn-success" disabled>Вы уже записаны</button>
+                <p>Событие добавлено в <a href="{% url 'my_events' %}">"Мои события"</a></p>
+            {% else %}
+                {% if event.max_participants > 0 and event.registered_count >= event.max_participants %}
+                    <button class="btn-disabled" disabled>Мест нет</button>
+                {% else %}
+                    <a href="{% url 'register_event' event.id %}" class="btn">Записаться на событие</a>
+                {% endif %}
+            {% endif %}
+        {% else %}
+            <p><a href="/admin/login/">Войдите</a>, чтобы записаться на событие</p>
+        {% endif %}
+    </div>
+</body>
+</html>
