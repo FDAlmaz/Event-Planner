@@ -3,12 +3,12 @@
 <head>
     <title>{{ event.title }}</title>
     <style>
-        body { font-family: Arial; max-width: 800px; margin: 0 auto; padding: 20px; }
+        body { font-family: Arial; max-width: 800px; margin: 0 auto; padding: 70px 20px 20px 20px; }
         .event-header { background: #f5f5f5; padding: 20px; border-radius: 8px; }
         .btn { background: #2196F3; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; display: inline-block; }
         .btn-success { background: #4CAF50; }
         .btn-disabled { background: #ccc; cursor: not-allowed; }
-        .navbar { background: #333; padding: 10px; margin-bottom: 20px; }
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; background: #333; padding: 12px 20px; z-index: 1000; }
         .navbar a { color: white; margin-right: 15px; text-decoration: none; }
     </style>
 </head>
