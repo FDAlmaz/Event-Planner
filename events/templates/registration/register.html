@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Регистрация - Event Planner</title>
+    <style>
+        body { font-family: Arial; max-width: 400px; margin: 50px auto; padding: 20px; }
+        .form-group { margin: 15px 0; }
+        input { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; }
+        button { background: #4CAF50; color: white; padding: 12px; border: none; width: 100%; cursor: pointer; }
+        .error { color: red; font-size: 14px; }
+        .help-text { color: #666; font-size: 12px; }
+        .login-link { text-align: center; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h2>Регистрация в Event Planner</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        {% for field in form %}
+        <div class="form-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.help_text %}
+                <div class="help-text">{{ field.help_text }}</div>
+            {% endif %}
+            {% for error in field.errors %}
+                <div class="error">{{ error }}</div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+    
+    <div class="login-link">
+        Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a>
+    </div>
+</body>
+</html>

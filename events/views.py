@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login
 from .models import Event, Participant
-from django.utils import timezone
+from .forms import RegisterForm
 
 def home(request):
     events = Event.objects.all().order_by('date')
@@ -37,3 +38,16 @@ def register_for_event(request, event_id):
 def my_events(request):
     my_participations = Participant.objects.filter(user=request.user)
     return render(request, 'events/my_events.html', {'participations': my_participations})
+
+# Функция регистр 
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # Автоматически входим после регистр
+            return redirect('home')
+    else:
+        form = RegisterForm()
+    
+    return render(request, 'registration/register.html', {'form': form})
