@@ -131,3 +131,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Для упрощения - на время разработки
 DEBUG = True
+
+LOGIN_REDIRECT_URL = '/'  # на главную страницу
+LOGOUT_REDIRECT_URL = '/'  # тоже на главную
